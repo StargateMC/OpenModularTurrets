@@ -142,16 +142,8 @@ if (project.allprojects.findAll({ it.name == "OpenModularPassiveDefense" }).size
 }
 
 dependencies {
-    deobfProvided ('valkyrienskies:valkyrienskies:1.12.2-1.0') {
-        transitive = false
-    }
-    testCompile ('valkyrienskies:valkyrienskies:1.12.2-1.0') {
-        transitive = false
-    }
     deobfProvided "mezz.jei:jei_${minecraft_version}:${jei_version}:api"
     testCompile "mezz.jei:jei_${minecraft_version}:${jei_version}:api"
-    deobfProvided "mcp.mobius.waila:Hwyla:${hwyla_version}_${minecraft_version_short}"
-    testCompile "mcp.mobius.waila:Hwyla:${hwyla_version}_${minecraft_version_short}"
     deobfProvided "cofh:RedstoneFlux:${minecraft_version_short}-${redstoneflux_version}:universal"
     testCompile "cofh:RedstoneFlux:${minecraft_version_short}-${redstoneflux_version}:universal"
     deobfProvided "mcjty.theoneprobe:TheOneProbe-${minecraft_version_short}:${minecraft_version_short}-${top_version}"

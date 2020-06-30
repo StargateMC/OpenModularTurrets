@@ -30,6 +30,10 @@ import valkyrienwarfare.api.TransformType;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import noppes.npcs.api.NpcAPI;
+import noppes.npcs.controllers.PlayerDataController;
+import noppes.npcs.entity.EntityCustomNpc;
+import omtteam.omlib.tileentity.TileEntityTrustedMachine;
 
 import static omtteam.omlib.util.player.PlayerUtil.*;
 import static omtteam.openmodularturrets.turret.TurretHeadUtil.getAimPitch;
@@ -118,6 +122,7 @@ public class TurretTargetingUtils {
     }
 
     public static boolean isEntityValidNeutral(TurretHead turret, EntityLivingBase possibleTarget) {
+        
         if (turret.getBase().isAttacksNeutrals() && OMTConfig.TURRETS.globalCanTargetNeutrals) {
             return !possibleTarget.isDead && (possibleTarget instanceof EntityAnimal ||
                     possibleTarget instanceof EntityAmbientCreature || NeutralList.contains(possibleTarget));
@@ -227,6 +232,7 @@ public class TurretTargetingUtils {
             return false;
         }
 
+        
         if (isEntityValidNeutral(turret, entity) && settings.isTargetPassive()) {
             return true;
         }
@@ -235,6 +241,13 @@ public class TurretTargetingUtils {
             return true;
         }
 
+        if (entity instanceof EntityCustomNpc) {
+            EntityCustomNpc npc = (EntityCustomNpc)entity;
+            TileEntityTrustedMachine machine = (TileEntityTrustedMachine)turret.getBase();
+            if (machine.getOwner().getEntityPlayer() != null) {
+                if (npc.getFaction().isAggressiveToPlayer(machine.getOwner().getEntityPlayer())) return true;
+            }
+        }
         return entity instanceof EntityPlayer;
     }
 }
