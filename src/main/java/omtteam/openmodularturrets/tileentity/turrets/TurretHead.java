@@ -77,12 +77,16 @@ public abstract class TurretHead extends TileEntityBase implements ITickable, IT
         nbtTagCompound.setInteger("ticksBeforeFire", ticks);
         nbtTagCompound.setBoolean("shouldConceal", shouldConceal);
         nbtTagCompound.setBoolean("autoFire", autoFire);
-        if (this.priorities != null) {
-            nbtTagCompound.setInteger("priorityMaxHP", this.priorities[EnumTargetingPriority.MAX_HP.ordinal()]);
-            nbtTagCompound.setInteger("priorityHPRemaining", this.priorities[EnumTargetingPriority.HP_REMAINING.ordinal()]);
-            nbtTagCompound.setInteger("priorityDistance", this.priorities[EnumTargetingPriority.DISTANCE.ordinal()]);
-            nbtTagCompound.setInteger("priorityArmor", this.priorities[EnumTargetingPriority.ARMOR.ordinal()]);
-            nbtTagCompound.setInteger("priorityPlayer", this.priorities[EnumTargetingPriority.PLAYER.ordinal()]);
+        try {
+            if (this.priorities != null) {
+                nbtTagCompound.setInteger("priorityMaxHP", this.priorities[EnumTargetingPriority.MAX_HP.ordinal()]);
+                nbtTagCompound.setInteger("priorityHPRemaining", this.priorities[EnumTargetingPriority.HP_REMAINING.ordinal()]);
+                nbtTagCompound.setInteger("priorityDistance", this.priorities[EnumTargetingPriority.DISTANCE.ordinal()]);
+                nbtTagCompound.setInteger("priorityArmor", this.priorities[EnumTargetingPriority.ARMOR.ordinal()]);
+                nbtTagCompound.setInteger("priorityPlayer", this.priorities[EnumTargetingPriority.PLAYER.ordinal()]);
+            }
+        } catch (Exception e) {
+            this.priorities = this.getDefaultPriorities();
         }
         return nbtTagCompound;
     }
