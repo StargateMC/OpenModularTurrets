@@ -40,6 +40,7 @@ public class MessageTurretBase implements IMessage {
     private List<TrustedPlayer> trustedPlayers = new ArrayList<>();
     private EnumMachineMode mode;
     private Player owner;
+    int dimension = -1;
 
     public MessageTurretBase() {
     }
@@ -48,6 +49,7 @@ public class MessageTurretBase implements IMessage {
         if (tileEntity instanceof TurretBase) {
             TurretBase base = (TurretBase) tileEntity;
             BlockPos pos = getTransformedBlockPos(base);
+            this.dimension = base.getWorld().provider.getDimension();
 
             this.x = pos.getX();
             this.y = pos.getY();
@@ -115,7 +117,11 @@ public class MessageTurretBase implements IMessage {
         buf.writeInt(tier);
         buf.writeInt(lightValue);
         buf.writeInt(lightOpacity);
+        try {
         Player.writeToByteBuf(owner, buf);
+        } catch (Exception e) {
+        	System.out.println("Failed to process owner for turret at : " + x + ", " + y + ", " + z + " on dimension : " + this.dimension);
+        }
         buf.writeInt(rfStorageCurrent);
         buf.writeInt(rfStorageMax);
         buf.writeInt(range);
